@@ -40,6 +40,9 @@
   - [ ] 가챠 기능 
   - [ ] 전술대항전 시뮬레이션 
 
+## reference
+- [구글시트](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4u7GUMO52fMRY1Ndcjvo3MSRiG4FoAYfHzdKLQvVoMAm4wdCnTj-QGLMH2ypE-FRqXaQQLEBUHx4X/pubhtml#), 제작자 [나힝구](https://www.twitch.tv/hinguo8o), 최종검색일 2021.03.17
+
 ## 예상 사양  
 - !캐릭터 = 캐릭터 목록
 - !캐릭터 <캐릭터 이름>  = 임베드 캐릭터 정보
