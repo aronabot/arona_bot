@@ -7,14 +7,16 @@ import discord
 from discord.ext import commands
 
 class Arona(commands.Bot):
-    __slots__ = ["config", "server"]
-    extensions_list = ["func.manager"]
+    __slots__ = ["logger", "config", "server"]
+    extensions_list = ["func.manager", "func.character"]
 
     def __init__(self):
         intents = discord.Intents(guilds=True, emojis=True, messages=True, 
                                 guild_messages=True, reactions=True, 
                                 guild_reactions=True)
         super().__init__(intents=intents, command_prefix="!")
+
+        self.logger = 0
 
         with open("config.json", encoding="utf-8") as data:
             self.config = json.load(data)
