@@ -10,10 +10,11 @@
   
 
 - 정보 업데이트 관련 
-  - [ ] 구글 정보 시트
-  - [ ] 공식 트위터 연동 
+  - [x] 구글 정보 시트
+  - [x] 구글 시트 다운로드
   - [ ] **정보 업데이트 확인** 
   - [ ] **정보 업데이트 구현** 
+  - [ ] 공식 트위터 연동 
 
 - 데이터
   - [x] 데이터 골격 
@@ -47,6 +48,7 @@
   - [ ] 도움말 기능
   - [ ] 가챠 기능 
   - [ ] 전술대항전 시뮬레이션 
+  - [ ] 로깅을 통한 오류 해결
 
 ## reference
 - [구글시트](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4u7GUMO52fMRY1Ndcjvo3MSRiG4FoAYfHzdKLQvVoMAm4wdCnTj-QGLMH2ypE-FRqXaQQLEBUHx4X/pubhtml#), 제작자 [나힝구](https://www.twitch.tv/hinguo8o), 최종검색일 2021.03.17
