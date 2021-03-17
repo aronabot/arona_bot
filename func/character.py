@@ -11,7 +11,10 @@ class Character(commands.Cog):
     member values:
         infoch:
             type: dict
-            describe: 캐릭터의 정보를 가지고 있는 채널의 목록
+            캐릭터의 정보를 가지고 있는 채널의 목록
+        characters:
+            type: dict
+            현재 등록되어 있는 캐릭터의 정보의 레퍼런스를 담고 있다.
     """
     __slots__ = ["infoch", "characters"]
 
@@ -37,10 +40,6 @@ class Character(commands.Cog):
 
         result = {attr : await ch.fetch_message(target[attr])
         for attr, ch in self.infoch.items()}
-
-        
-    
-        
 
         result["icon"] = result["icon"].attachments[0].url
         result["ability"] = json.loads(result["ability"].content)
