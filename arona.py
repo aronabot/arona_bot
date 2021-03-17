@@ -1,5 +1,3 @@
-import func
-
 import os
 import json
 import logging
@@ -10,6 +8,7 @@ from discord.ext import commands
 
 class Arona(commands.Bot):
     __slots__ = ["config", "server"]
+    extensions_list = ["func.manager"]
 
     def __init__(self):
         intents = discord.Intents(guilds=True, emojis=True, messages=True, 
@@ -24,15 +23,12 @@ class Arona(commands.Bot):
 
     def run(self, bot_token: str):
         super().run(bot_token, reconnect=True)
-        #self.load_extension("")
 
     async def on_ready(self):
         print("logged in as {0}".format(self.user))
+        for ext in self.extensions_list:
+            self.load_extension(ext)
 
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-       
     async def on_command_error(self, ctx, error):
         ignore_exception_list = [
             commands.CommandNotFound,
