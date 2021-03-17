@@ -8,7 +8,7 @@ from discord.ext import commands
 
 class Arona(commands.Bot):
     __slots__ = ["logger", "config", "server"]
-    extensions_list = ["func.manager", "func.character"]
+    extensions_list = ["func.manager", "func.character", "func.termevent.pickup"]
 
     def __init__(self):
         intents = discord.Intents(guilds=True, emojis=True, messages=True, 
