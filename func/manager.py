@@ -1,6 +1,7 @@
 import asyncio
 import discord
 from discord.ext import commands
+import pymysql
 from .util import *
 
 import arona
@@ -18,6 +19,7 @@ class Manager(commands.Cog):
 
         return result
 
+    @commands.is_owner()
     @commands.command(name="show")
     async def _show_extension(self, ctx):
         result = "```"
@@ -27,6 +29,7 @@ class Manager(commands.Cog):
         
         return await ctx.send(result)
 
+    @commands.is_owner()
     @commands.command(name="load")
     async def _load_extension(self, ctx, *, extensions):
         extensions = extensions.split(" ")
@@ -50,7 +53,7 @@ class Manager(commands.Cog):
             status_string = self._tostring(status)
             await message.edit(content="```{0}```".format(status_string))
 
-
+    @commands.is_owner()
     @commands.command(name="unload")
     async def _unload_extension(self, ctx, *, extensions):
         extensions = extensions.split(" ")
@@ -74,6 +77,7 @@ class Manager(commands.Cog):
             status_string = self._tostring(status)
             await message.edit(content="```{0}```".format(status_string))
 
+    @commands.is_owner()
     @commands.command(name="reload")
     async def _reload_extension(self, ctx):
         extensions = self.arona.extensions_list

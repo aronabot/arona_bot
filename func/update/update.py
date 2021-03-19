@@ -8,14 +8,11 @@ import arona
 class Update(commands.Cog):
     def __init__(self, arona: arona.Arona):
         self.arona = arona
-        self.connector = Connector(arona.config["mirror"], arona.config["term"])
 
-    async def _get_rawdata(self):
-        rawdata = await self.connector.download()
-        return rawdata
-
-    async def _parsing_rawdata(self):
-        pass
+    @commands.is_owner()
+    @commands.command(name="update")
+    async def _update(self, ctx):
+        await ctx.send("업데이트를 진행합니다.")
 
 def setup(arona: arona.Arona):
     arona.add_cog(Update(arona))
