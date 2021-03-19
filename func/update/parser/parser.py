@@ -43,10 +43,11 @@ class CharacterInfoParser(Parser):
         result = {self.term[k]: v for k, v in zip(self.rule, subtable) if self.term[k] != ""}
 
         result["icon"] = result["icon"][0]
-        result["position"] = "{0[0]}/{1[0]}".format(
-            subtable[self.rule.index("역할_역할")], subtable[self.rule.index("역할_위치")]
-        )
-        result["combat_advantage"] = {k: result.pop[k] for k in advantage}
+        
+        result["position1"] = subtable[self.rule.index("역할_역할")]
+        result["position2"] = subtable[self.rule.index("역할_위치")]
+
+        result["combat_advantage"] = {k: result.pop(k) for k in advantage}
         result["status"] = {k: int(result.pop(k)) for k in status}
 
         return result
@@ -75,22 +76,19 @@ class SkillsInfoParser(Parser):
         result = {self.term[k]: v for k, v in zip(self.rule, subtable) if self.term[k] != ""}
 
         del result["icon"]
+
         result["ex"] = {
-            "name": "", 
             "cost": int(result.pop("cost")), 
-            "descirbe": result.pop("ex")
+            "content": result.pop("ex")
         }
         result["basic"] = {
-            "name": "", 
-            "descirbe": result.pop("basic")
+            "content": result.pop("basic")
         }
         result["passive"] = {
-            "name": "", 
-            "descirbe": result.pop("passive")
+            "content": result.pop("passive")
         }
         result["sub"] = {
-            "name": "", 
-            "descirbe": result.pop("sub")
+            "content": result.pop("sub")
         } 
 
         return result

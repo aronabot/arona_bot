@@ -1,5 +1,6 @@
 __pycache__
 *.bat
+*.sql
 *.jpg
 *.png
 config.json

@@ -3,7 +3,7 @@ from .parser import *
 class GoogleSheet:
     __slots__ = ["parser", "config", "keys"]
     def __init__(self):
-        with open("./config.json", "r", encoding="utf-8") as data:
+        with open("./func/update/parser/config.json", "r", encoding="utf-8") as data:
             self.config = json.load(data)
 
         self.keys = {i: self.config[i]["key"] for i in self.config if "key" in self.config[i]}

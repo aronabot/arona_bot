@@ -34,7 +34,8 @@ class Arona(commands.Bot):
     async def on_command_error(self, ctx, error):
         ignore_exception_list = [
             commands.CommandNotFound,
-            commands.MissingRequiredArgument
+            commands.MissingRequiredArgument,
+            commands.errors.NotOwner
         ]
 
         if any(isinstance(error, i) for i in ignore_exception_list):

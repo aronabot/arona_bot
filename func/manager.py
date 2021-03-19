@@ -1,7 +1,6 @@
 import asyncio
 import discord
 from discord.ext import commands
-import pymysql
 from .util import *
 
 import arona
