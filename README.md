@@ -51,6 +51,7 @@
   - [ ] 로깅을 통한 오류 해결
 
 ## reference
+- [구글시트](https://docs.google.com/spreadsheets/d/e/2PACX-1vRT3vi_5B6tHsz0s9qGy13-chVMURiogsaz0XXDaGKHPPDok5fRezAoI8NvtHeRqBuvIzmQEMnGr-34/pubhtml), 제작자 [ㅇㅇ](https://gallog.dcinside.com/rodosisland/guestbook), 최종검색일 2021.03.19
 - [구글시트](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4u7GUMO52fMRY1Ndcjvo3MSRiG4FoAYfHzdKLQvVoMAm4wdCnTj-QGLMH2ypE-FRqXaQQLEBUHx4X/pubhtml#), 제작자 [나힝구](https://www.twitch.tv/hinguo8o), 최종검색일 2021.03.17
 
 ## 예상 사양  
