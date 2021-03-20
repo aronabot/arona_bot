@@ -19,7 +19,7 @@ class Manager(commands.Cog):
         return result
 
     @commands.is_owner()
-    @commands.command(name="show")
+    @commands.command(name="show", hidden=True)
     async def _show_extension(self, ctx):
         result = "```\n"
         for ext in self.arona.extensions_list:
@@ -29,7 +29,7 @@ class Manager(commands.Cog):
         return await ctx.send(result)
 
     @commands.is_owner()
-    @commands.command(name="load")
+    @commands.command(name="load", hidden=True)
     async def _load_extension(self, ctx, *, extensions):
         extensions = extensions.split(" ")
         status = { k : "❌" for k in extensions }
@@ -53,7 +53,7 @@ class Manager(commands.Cog):
             await message.edit(content="```{0}```".format(status_string))
 
     @commands.is_owner()
-    @commands.command(name="unload")
+    @commands.command(name="unload", hidden=True)
     async def _unload_extension(self, ctx, *, extensions):
         extensions = extensions.split(" ")
         status = { k : "❌" for k in extensions }
@@ -77,7 +77,7 @@ class Manager(commands.Cog):
             await message.edit(content="```{0}```".format(status_string))
 
     @commands.is_owner()
-    @commands.command(name="reload")
+    @commands.command(name="reload", hidden=True)
     async def _reload_extension(self, ctx):
         extensions = self.arona.extensions_list
         status = { k : "❌" for k in extensions }

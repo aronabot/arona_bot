@@ -18,7 +18,7 @@ class Update(commands.Cog):
         self._init_database()
 
     @commands.is_owner()
-    @commands.command(name="dummy_update")
+    @commands.command(name="dummy_update", hidden=True)
     async def _dummy_update(self, ctx):
         await ctx.send("더미 업데이트를 진행합니다.")
         self.arona.updating = True
@@ -29,7 +29,7 @@ class Update(commands.Cog):
         self.arona.updating = False
 
     @commands.is_owner()
-    @commands.command(name="update")
+    @commands.command(name="update", hidden=True)
     async def _update(self, ctx):
         raw_data, downloader  = {}, GoogleSheet()
         await ctx.send("업데이트를 진행합니다.")
@@ -51,12 +51,54 @@ class Update(commands.Cog):
         
         try:
             await self._update_character(ctx, raw_data["character"])
+            await self._update_skill(ctx, raw_data["skills"])
             
         except Exception as e:
             print(e)
 
         self.arona.updating = False
         return await ctx.send("업데이트를 성공적으로 마쳤습니다.")
+
+    async def _update_skill(self, ctx, sheets):
+        #전체 스킬을 업데이트 한다.
+        total_task = 0
+        for sheet in sheets:
+            total_task += len(sheet)
+
+        await ctx.send("**{0}**개의 스킬 데이터를 업데이트 합니다. 잠시만 기다려주세요...".format(total_task))
+        if total_task == 0:
+            return
+
+        self.current_task = 0
+        update_msg = await ctx.send("**{0}**/{1}".format(total_task, self.current_task))
+
+        tasks = [asyncio.create_task(self._insert_skill(total_task, update_msg, sheet)) for sheet in sheets]
+        await asyncio.gather(*tasks)
+
+    async def _insert_skill(self, tt, msg, sheet):
+        #단일 스킬 업데이트
+        exsql = "INSERT INTO exskills(cost, content) SELECT %s, %s FROM DUAL WHERE NOT EXISTS(SELECT id FROM exskills WHERE content=%s)"
+        sql = "INSERT INTO skills(content) SELECT %s FROM DUAL WHERE NOT EXISTS(SELECT id FROM skills WHERE content=%s)"
+        exssql = "SELECT id FROM exskills WHERE content=%s"
+        ssql = "SELECT id FROM skills WHERE content=%s"
+        usql = "UPDATE characters SET ex_skill=%s, basic_skill=%s, passive_skill=%s, sub_skill=%s WHERE name=%s"
+
+        for data in sheet:
+            name, ex, basic, passive, sub = data["name"], data["ex"]["content"], data["basic"]["content"], data["passive"]["content"], data["sub"]["content"]
+            self._execute(exsql, (data["ex"]["cost"], ex, ex))
+            self._execute(sql, (basic, basic))
+            self._execute(sql, (passive, passive))
+            self._execute(sql, (sub, sub))
+
+            exid = self._execute(exssql, (ex))[0]
+            basicid = self._execute(ssql, (basic))[0]
+            passiveid = self._execute(ssql, (passive))[0]
+            subid = self._execute(ssql, (sub))[0]
+
+            self._execute(usql, (exid, basicid, passiveid, subid, name))
+
+            self.current_task += 1
+            await msg.edit(content="**{0}**/{1}".format(tt, self.current_task))
 
     async def _update_character(self, ctx, sheets):
         #전체 캐릭터 시트 업데이트
@@ -81,9 +123,7 @@ class Update(commands.Cog):
         positions = self._list_to_dict(positions)
 
         tasks = [asyncio.create_task(self._insert_character(total_task, update_msg, positions, sheet)) for sheet in sheets]
-        print("===")
         await asyncio.gather(*tasks)
-        print("===")
 
     async def _upload_character_icon(self, name, url):
         #캐릭터 아이콘 업로드
