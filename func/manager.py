@@ -21,7 +21,7 @@ class Manager(commands.Cog):
     @commands.is_owner()
     @commands.command(name="show")
     async def _show_extension(self, ctx):
-        result = "```"
+        result = "```\n"
         for ext in self.arona.extensions_list:
             result += "{0}\n".format(ext)
         result += "```"

@@ -1,13 +1,15 @@
 import os
 import json
-import logging
 
 import asyncio
 import discord
 from discord.ext import commands
+import logging
+
+
 
 class Arona(commands.Bot):
-    __slots__ = ["logger", "config", "server"]
+    __slots__ = ["config", "server"]
     extensions_list = ["func.manager", "func.character", "func.termevent", "func.update"]
 
     def __init__(self):
@@ -16,12 +18,11 @@ class Arona(commands.Bot):
                                 guild_reactions=True)
         super().__init__(intents=intents, command_prefix="!")
 
-        self.logger = 0
-
+        self.updating = False
+        
         with open("config.json", encoding="utf-8") as data:
             self.config = json.load(data)
             self.server = self.config["discord"]
-
 
     def run(self, bot_token: str):
         super().run(bot_token, reconnect=True)
@@ -30,6 +31,15 @@ class Arona(commands.Bot):
         print("logged in as {0}".format(self.user))
         for ext in self.extensions_list:
             self.load_extension(ext)
+
+    async def on_message(self, message):
+        if message.author.bot:
+            return
+        
+        if self.updating and message.content in ["{0}{1}".format(self.command_prefix, c.name) for c in self.commands]:
+            return await message.channel.send("현재 업데이트 중입니다. 잠시만 기다려 주세요...")
+
+        return await self.process_commands(message)
 
     async def on_command_error(self, ctx, error):
         ignore_exception_list = [

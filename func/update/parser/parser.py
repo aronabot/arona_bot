@@ -43,9 +43,6 @@ class CharacterInfoParser(Parser):
         result = {self.term[k]: v for k, v in zip(self.rule, subtable) if self.term[k] != ""}
 
         result["icon"] = result["icon"][0]
-        
-        result["position1"] = subtable[self.rule.index("역할_역할")]
-        result["position2"] = subtable[self.rule.index("역할_위치")]
 
         result["combat_advantage"] = {k: result.pop(k) for k in advantage}
         result["status"] = {k: int(result.pop(k)) for k in status}
