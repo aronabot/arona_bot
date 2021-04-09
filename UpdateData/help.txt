@@ -1,0 +1,83 @@
+"CharacterExcelTable"
+        [
+            "Id", -> int
+            "DevName", -> str if null
+            "Rarity", -> str
+            "TacticEntityType", -> str
+            "TacitcRole", -> str 
+            "WeaponType", -> str
+            "BulletType", -> str
+            "ArmorType", -> str
+            "AimIKType", -> str
+            "School", -> str
+            "Club", -> str
+            "DefaultStarGrade", -> int
+            "EquipmentSlot", -> list(str)
+        ]
+
+        "CharacterStatExcelTable"
+        [
+            "CharacterId",
+            "DevName", -> str
+            "AttackPower1",
+            "MaxHP1", 
+            "DefensePower1",
+            "HealPower1",
+            "DodgePoint",
+            "AccuracyPoint",
+            "CriticalPoint",
+            "Range",
+            "StreetBattleAdaptation", -> str
+            "OutdoorBattleAdaptation", -> str
+            "IndoorBattleAdaptation", -> str
+        ]
+        "LocalizeCharProfileExcelTable"
+        [
+            "CharacterId",
+            "PersonalNameKr",
+            "PersonalNameJP",
+            "StatusMessageKr"
+        ]
+
+        "CharacterSkillListExcelTable"
+        [
+            "CharacterId", -> int
+            "DevName", -> str
+            "NormalSkillGroupId", -> list(str)
+            "ExSkillGroupId", -> list(str)
+            "PublicSkillGroupId", -> list(str)
+            "PassiveSkillGroupId", -> list(str)
+            "LeaderSkillGroupId", -> list(str)
+            "ExtraPassiveSkillGroupId" -> list(str)
+        ]
+
+        "SkillExcelTable"
+        [
+            "LocalizeSkillId", -> int
+            "GroupId", -> str, ExSkillGroupId etc
+            "SkillCost" -> int
+        ]
+        "LocalizeSkillExcelTable"
+        [
+            "Key", -> int, LocalizeSkillId
+            "NameKr", -> str
+            "DescriptionKr", -> str
+        ]
+
+        "LocalizeGachaShopExcelTable"
+        [
+            "GachaShopId",
+            "DevName",
+            "TabNameKr",
+            "TitleNameKr",
+            "SubTitleKr",
+            "GachaDescriptionKr"
+        ]
+        "ShopRecruitExcelTable"
+        [
+            "Id", GachaShopId
+            "CategoryType",
+            "InfoCharacterId", -> list(int)
+            "SalePreiodFrom", -> "%m/%D/%Y %H:%M:%S"
+            "SalePreiodTo",
+        ]

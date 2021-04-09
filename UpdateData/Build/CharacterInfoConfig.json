@@ -1,0 +1,17 @@
+{
+    "Character": ["Id", "DevName", "Rarity", "TacticEntityType", "TacticRole", 
+                  "WeaponType", "BulletType", "ArmorType", "AimIKType", "School",
+                  "Club", "DefaultStarGrade", "EquipmentSlot"],
+
+    "CharacterStat": ["CharacterId", "DevName", "AttackPower1", "MaxHP1", "DefensePower1",
+                      "HealPower1", "DodgePoint", "AccuracyPoint", "CriticalPoint", "Range",
+                      "StreetBattleAdaptation", "OutdoorBattleAdaptation", "IndoorBattleAdaptation"],
+
+    "LocalizeCharProfile": ["CharacterId", "PersonalNameKr", "PersonalNameJp", "StatusMessageKr"],
+
+    "CharacterSkillList": ["CharacterId", "DevName", "NormalSkillGroupId", "ExSkillGroupId", "PublicSkillGroupId", 
+                           "PassiveSkillGroupId", "ExtraPassiveSkillGroupId"],
+
+    "Skill": ["LocalizeSkillId", "GroupId", "SkillCost"],
+    "LocalizeSkill": ["Key", "NameKr", "DescriptionKr"]
+}

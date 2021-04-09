@@ -1,104 +1,47 @@
 import asyncio
-import discord
 from discord.ext import commands
-from .util import *
+
+from Func.Manage.ExtensionManager import ExtensionManager
 
 import arona
 
 class Manager(commands.Cog):
     def __init__(self, arona: arona.Arona):
         self.arona = arona
-        pass
-    
-    def _tostring(self, status: dict) -> str:
-        result = ""
+        self.extension_manager = ExtensionManager(arona)
 
-        for ext, s in status.items():
-            result += "{0}:{1}\n".format(s, ext)
-
-        return result
 
     @commands.is_owner()
-    @commands.command(name="show", hidden=True)
-    async def _show_extension(self, ctx):
-        result = "```\n"
-        for ext in self.arona.extensions_list:
-            result += "{0}\n".format(ext)
-        result += "```"
-        
-        return await ctx.send(result)
+    @commands.command(name="e", hidden=True)
+    async def _call_extension_manager(self, ctx, *, oper):
+        """
+        manager about extensions
+        """
+        switch = {  
+            "display": self.extension_manager.display_extensions,
+            "load": self.extension_manager.load_extensions, 
+            "reload": self.extension_manager.reload_extensions, 
+            "unload": self.extension_manager.unload_extensions
+        }
+
+        oper = oper.split(" ")
+        operator, operands = oper[0], oper[1:]
+
+        await switch[operator](ctx, operands)
 
     @commands.is_owner()
-    @commands.command(name="load", hidden=True)
-    async def _load_extension(self, ctx, *, extensions):
-        extensions = extensions.split(" ")
-        status = { k : "❌" for k in extensions }
+    @commands.command(name="u", hidden=True)
+    async def _call_update_manager(self, ctx, * oper):
+        """
+        manager about update
+        """
+        switch = {
 
-        status_string = self._tostring(status)
-        message = await sendmsg(ctx, status_string)
-        
-        if message is None:
-            return
+        }
+        operator, operands = oper[0], oper[1:]
+        operands = "\n".join(operands)
 
-        for ext in extensions:
-            try:
-                self.arona.load_extension(ext)
-                self.arona.extensions_list += [ext]
-                status[ext] = "✔️"
+        await switch[operator](ctx, operands)
 
-            except Exception as e:
-                status["{0} : {1}".format(ext, type(e).__name__)] = status.pop(ext)
-
-            status_string = self._tostring(status)
-            await message.edit(content="```{0}```".format(status_string))
-
-    @commands.is_owner()
-    @commands.command(name="unload", hidden=True)
-    async def _unload_extension(self, ctx, *, extensions):
-        extensions = extensions.split(" ")
-        status = { k : "❌" for k in extensions }
-
-        status_string = self._tostring(status)
-        message = await sendmsg(ctx, status_string)
-        
-        if message is None:
-            return
-
-        for ext in extensions:
-            try:
-                self.arona.unload_extension(ext)
-                self.arona.extensions_list.remove(ext)
-                status[ext] = "✔️"
-
-            except Exception as e:
-                status["{0} : {1}".format(ext, type(e).__name__)] = status.pop(ext)
-
-            status_string = self._tostring(status)
-            await message.edit(content="```{0}```".format(status_string))
-
-    @commands.is_owner()
-    @commands.command(name="reload", hidden=True)
-    async def _reload_extension(self, ctx):
-        extensions = self.arona.extensions_list
-        status = { k : "❌" for k in extensions }
-
-        status_string = self._tostring(status)
-        message = await sendmsg(ctx, status_string)
-        
-        if message is None:
-            return
-
-        for ext in extensions:
-            try:
-                self.arona.reload_extension(ext)
-                status[ext] = "✔️"
-
-            except Exception as e:
-                status["{0} : {1}".format(ext, type(e).__name__)] = status.pop(ext)
-
-            status_string = self._tostring(status)
-            await message.edit(content="```{0}```".format(status_string))
-
-
-def setup(arona : arona.Arona):
+def setup(arona: arona.Arona):
     arona.add_cog(Manager(arona))
